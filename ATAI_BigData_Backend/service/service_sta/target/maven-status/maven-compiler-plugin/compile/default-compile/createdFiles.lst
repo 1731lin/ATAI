@@ -1,0 +1,10 @@
+com\atai\edusta\controller\StatisticsDailyController.class
+com\atai\edusta\entity\StatisticsDaily.class
+com\atai\edusta\client\UcenterFileDegradeFeignClient.class
+com\atai\edusta\mapper\StatisticsDailyMapper.class
+com\atai\edusta\StaApplication.class
+com\atai\edusta\schdule\ScheduledTask.class
+com\atai\edusta\service\impl\StatisticsDailyServiceImpl.class
+com\atai\edusta\client\UcenterClient.class
+com\atai\edusta\service\StatisticsDailyService.class
+com\atai\edusta\utils\DateUtil.class

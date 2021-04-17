@@ -36,9 +36,9 @@ export default {
      },
     
      //根据文章获取评论
-     getCommentsByArticle(id) {
+     getCommentsByArticle(page,limit,id) {
       return request({
-        url: `/comments/article/${id}`,
+        url: `/eduservice/atai-comment/commentList/${page}/${limit}/${id}`,
         method: 'get'
       })
     },
@@ -46,7 +46,7 @@ export default {
     //文章下发布评论
     publishComment(comment) {
       return request({
-        url: '/comments/create/change',
+        url: '/eduservice/atai-comment/saveComment',
         method: 'post',
         data: comment
       })

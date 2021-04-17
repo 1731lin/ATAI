@@ -25,7 +25,7 @@
           -->
           <el-option :value="1" label="新人赛" />
           <el-option :value="2" label="创新应用大赛" />
-          <el-option :value="2" label="算法大赛" />
+          <el-option :value="3" label="算法大赛" />
         </el-select>
         
       </el-form-item>
@@ -210,12 +210,13 @@
           cancelButtonText: '取消'
         }).then(({ value }) => {
           this.competitionUserInfo.teamName=value
+
+          //调用接口插入队伍信息
+          this.insertUserCompetition()     
           this.$message({
             type: 'success',
             message: '你的队伍是: ' + value,        
-          });
-          //调用接口插入队伍信息
-        this.insertUserCompetition()        
+          });   
           
         }).catch(() => {
           this.$message({

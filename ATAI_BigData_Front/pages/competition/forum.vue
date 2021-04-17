@@ -1,5 +1,5 @@
 <template>
-    <div class="forum">
+    <div class="forum"  style="width: 100%;min-height:500px">
         论坛
     </div>
 </template>

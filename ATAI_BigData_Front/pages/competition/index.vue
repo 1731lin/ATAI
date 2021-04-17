@@ -9,7 +9,7 @@
       </header>
       
       <section class="c-sort-box unBr">
- <section class="c-s-dl">
+         <section class="c-s-dl">
           <dl>
             <dt>
               <span class="c-999 fsize14">比赛类别</span>

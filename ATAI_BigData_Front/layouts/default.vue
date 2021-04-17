@@ -14,13 +14,10 @@
               <a>首页</a>
             </router-link>
             <router-link to="/competition" tag="li" active-class="current">
-              <a>比赛</a>
+              <a>大数据竞赛</a>
             </router-link>
             <router-link to="/teacher" tag="li" active-class="current">
               <a>成员</a>
-            </router-link>
-            <router-link to="/practice" tag="li" active-class="current">
-              <a>练习</a>
             </router-link>
             <router-link to="/blog" tag="li" active-class="current">
               <a>文章</a>
@@ -60,7 +57,7 @@
           <aside class="h-r-search">
             <form action="#" method="post">
               <label class="h-r-s-box">
-                <input type="text" placeholder="输入你想参加的比赛" v-model="keyword" name="queryCourse.courseName" value>
+                <input type="text" placeholder="输入比赛" v-model="keyword" name="queryCourse.courseName" value>
                 <router-link :to="{path:'/competition/',query: {index: this.keyword}}">
                     <button type="submit" class="s-btn" @click="search()">
                       <em class="icon18">&nbsp;</em>
@@ -116,12 +113,12 @@
           <aside class="fl col-3 tac mt15">
             <section class="gf-tx">
               <span>
-                <a href="https://edu-zjm.oss-cn-beijing.aliyuncs.com/Resume/QR%20Code/wx.jpg"><img src="~/assets/img/wx-icon.png" alt></a>
+                <a href="https://cqut-1.oss-cn-beijing.aliyuncs.com/IMG_3004%2820210408-205625%29.PNG"><img src="~/assets/img/wx-icon.png" alt></a>
               </span>
             </section>
             <section class="gf-tx">
               <span>
-                <a href="https://weibo.com/u/5483300641"><img src="~/assets/img/wb-icon.png" alt></a>
+                <a href="https://weibo.com/u/6831557553"><img src="~/assets/img/wb-icon.png" alt></a>
               </span>
             </section>
           </aside>
@@ -163,7 +160,7 @@
           nickname: '',
           sex: ''
         },
-           keyword: '2223'
+           keyword: ''
       }
     },
     created() {

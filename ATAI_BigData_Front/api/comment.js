@@ -35,4 +35,20 @@ export default {
        })
      },
     
+     //根据文章获取评论
+     getCommentsByArticle(id) {
+      return request({
+        url: `/comments/article/${id}`,
+        method: 'get'
+      })
+    },
+    
+    //文章下发布评论
+    publishComment(comment) {
+      return request({
+        url: '/comments/create/change',
+        method: 'post',
+        data: comment
+      })
+    }
 }

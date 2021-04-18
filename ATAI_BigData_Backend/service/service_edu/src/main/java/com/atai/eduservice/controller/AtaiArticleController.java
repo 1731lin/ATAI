@@ -2,19 +2,28 @@ package com.atai.eduservice.controller;
 
 
 import com.atai.commonutils.result.R;
+import com.atai.commonutils.util.JwtInfo;
+import com.atai.commonutils.util.JwtUtils;
+import com.atai.eduservice.entity.AtaiArticle;
+import com.atai.eduservice.entity.AtaiArticleBody;
+import com.atai.eduservice.entity.EduTeacher;
 import com.atai.eduservice.entity.frontvo.ArticleContentFront;
 import com.atai.eduservice.entity.frontvo.ArticleFrontVo;
+import com.atai.eduservice.entity.frontvo.ArticlePublish;
 import com.atai.eduservice.entity.vo.ArticleQuery;
+import com.atai.eduservice.service.AtaiArticleBodyService;
 import com.atai.eduservice.service.AtaiArticleService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -32,6 +41,9 @@ public class AtaiArticleController {
 
     @Autowired
     private AtaiArticleService ataiArticleService;
+
+    @Autowired
+    private AtaiArticleBodyService ataiArticleBodyService;
 
     //1 分页条件查询文章列表
     //rest风格
@@ -60,6 +72,56 @@ public class AtaiArticleController {
     public R getArticleById(@PathVariable String id) {
         ArticleContentFront articleContentFront = ataiArticleService.getArticleById(id);
         return R.success().data("data",articleContentFront);
+    }
+
+    //添加文章接口的方法
+    @ApiOperation(value = "添加或修改文章")
+    @PostMapping("addArticle")
+    public R addArticle(@RequestBody ArticlePublish articlePublish, HttpServletRequest request) {
+        JwtInfo jwtToken = null;
+        try{
+            jwtToken = JwtUtils.getMemberIdByJwtToken(request);
+        }catch (Exception e){
+            return R.error().code(28004).message("请登录");
+        }
+        if(StringUtils.isEmpty(jwtToken)) {
+            return R.error().code(28004).message("请登录");
+        }
+        AtaiArticle ataiArticle = new AtaiArticle();
+        AtaiArticleBody ataiArticleBody = new AtaiArticleBody();
+        //把articlePublish对象的值赋给bean
+        BeanUtils.copyProperties(articlePublish,ataiArticle);
+        BeanUtils.copyProperties(articlePublish,ataiArticleBody);
+        if(null!= articlePublish.getId()){
+            //更新
+            boolean update = ataiArticleService.updateById(ataiArticle);
+            ataiArticleBody.setId(articlePublish.getBodyId());
+            boolean update1 = ataiArticleBodyService.updateById(ataiArticleBody);
+            if(update&&update1) {
+                return R.success().data("articleId",ataiArticle.getId());
+            } else {
+                return R.error();
+            }
+
+        }else{
+            //新增
+            boolean save1 = ataiArticleBodyService.save(ataiArticleBody);
+
+            //设置body_id
+            ataiArticle.setBodyId(ataiArticleBody.getId());
+            //设置author_id
+            ataiArticle.setAuthorId(jwtToken.getId());
+            boolean save = ataiArticleService.save(ataiArticle);
+
+            if(save1&&save) {
+                return R.success().data("articleId",ataiArticle.getId());
+            } else {
+                return R.error();
+            }
+        }
+
+
+
     }
 }
 

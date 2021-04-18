@@ -1,5 +1,5 @@
 <template>
-  <div v-title data-title="ForFun Find Yourself" class="bg-fa of">
+  <div  class="bg-fa of">
     <section class="container">
     <el-container>
 
@@ -9,8 +9,7 @@
 
       </el-main>
 
-      <el-aside>
-
+      <el-aside>      
         <card-me class="me-area"></card-me>
         <card-tag :tags="hotTags"></card-tag>
 

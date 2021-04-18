@@ -1,21 +1,19 @@
-package com.atai.eduservice.entity;
+package com.atai.eduservice.entity.frontvo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.util.Date;
+
+
 /**
  * <p>
- * 文章
+ * 写文章
  * </p>
  *
  * @author linshengbin
@@ -24,14 +22,17 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="AtaiArticle对象", description="文章")
-public class AtaiArticle implements Serializable {
+@ApiModel(value="ArticlePublish对象", description="文章")
+public class ArticlePublish implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "文章ID")
     @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
+
+    @ApiModelProperty(value = "文章体ID")
+    private String bodyId;
 
     @ApiModelProperty(value = "摘要")
     private String summary;
@@ -40,29 +41,46 @@ public class AtaiArticle implements Serializable {
     private String title;
 
     @ApiModelProperty(value = "评论数")
+    @TableField(fill = FieldFill.INSERT)
     private Integer commentCounts;
 
     @ApiModelProperty(value = "浏览数")
+    @TableField(fill = FieldFill.INSERT)
     private Integer viewCounts;
 
     @ApiModelProperty(value = "权重")
+    @TableField(fill = FieldFill.INSERT)
     private Integer weight;
 
-    @ApiModelProperty(value = "作者ID")
+    @ApiModelProperty(value = "标签列表")
+    private String tag;
+
+    @ApiModelProperty(value = "html内容")
+    private String contentHtml;
+
+    //作者
+    @ApiModelProperty(value = "作者名称")
+    private String nickname;
+
+    @ApiModelProperty(value = "作者id")
     private String authorId;
 
-    @ApiModelProperty(value = "文章体ID")
-    private String bodyId;
+    @ApiModelProperty(value = "作者头像")
+    private String avatar;
+
+    //文章体
+    @ApiModelProperty(value = "内容")
+    private String content;
+
+    @ApiModelProperty(value = "内容id")
+    private String contentId;
 
     @ApiModelProperty(value = "文章分类")
     private String category;
 
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
+    @TableLogic
     private Integer isDeleted;
-
-    @ApiModelProperty(value = "标签列表")
-    @TableField(fill = FieldFill.INSERT)
-    private String tag;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -71,6 +89,4 @@ public class AtaiArticle implements Serializable {
     @ApiModelProperty(value = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
-
-
 }

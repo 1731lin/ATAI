@@ -19,13 +19,13 @@
               </div>
 
             </div>
-            <!-- <el-button
-              v-if="this.article.author.id == this.$store.state.id"
+            <el-button
+              v-if="this.article.id !=null"
               @click="editArticle()"
-              style="position: absolute;left: 60%;"
+              style="position: absolute;left: 80%;"
               size="mini"
               round
-              icon="el-icon-edit">编辑</el-button> -->
+              icon="el-icon-edit">编辑</el-button>
           </div>
           <div class="me-view-content">
             <markdown-editor :editor=article.editor></markdown-editor>
@@ -162,7 +162,7 @@
     },
     methods: {
       editArticle() {
-        // this.$router.push({path: `/write/${this.article.id}`})
+        this.$router.push({path: `/write/${this.article.id}`})
       },
       getArticle() {
         let that = this

@@ -4,17 +4,18 @@
     <el-card :body-style="{ padding: '8px 18px' }">        
         <el-form :inline="true" class="demo-form-inline" size="mini">  
       <el-form-item >
-          <el-date-picker v-model="compObj.begin" type="datetime" placeholder="选择开始时间" value-format="yyyy-MM-dd HH:mm:ss"
+          <el-date-picker style="width:160px" v-model="compObj.begin" type="datetime" placeholder="选择开始时间" value-format="yyyy-MM-dd HH:mm:ss"
             default-time="00:00:00" />
         </el-form-item>
         <el-form-item>
-          <el-date-picker v-model="compObj.end" type="datetime" placeholder="选择截止时间" value-format="yyyy-MM-dd HH:mm:ss"
+          <el-date-picker style="width:160px" v-model="compObj.end" type="datetime" placeholder="选择截止时间" value-format="yyyy-MM-dd HH:mm:ss"
             default-time="00:00:00" />
         </el-form-item>
          <el-form-item>
         <el-input v-model="compObj.title" placeholder="输入文章标题"/>
       </el-form-item>      
-       <el-button size="mini" plain="true" type="primary" icon="el-icon-search" @click="a(compObj.title,compObj.begin,compObj.end)">查询</el-button>
+       <el-button size="mini" type="primary" icon="el-icon-search" @click="search(compObj.title,compObj.begin,compObj.end)">查询</el-button>
+       <el-button size="mini" type="primary" icon="el-icon-edit" @click="write()">写文章</el-button>
     </el-form>
     </el-card> 
     <!-- 文章组件    -->
@@ -45,6 +46,7 @@
   import ArticleItem from '@/components/article/ArticleItem'
   import ScrollPage from '@/components/scrollpage'
   import blogApi from '@/api/blog'
+  import cookie from 'js-cookie'
   import '~/assets/css/iconfont.css'
   export default {
     name: "ArticleScrollPage",
@@ -64,15 +66,15 @@
         //   name: 'a.createDate',
         //   sort: 'desc'
         // },
-        articles: []
+        articles: ["111111111"]
         }     
     },
 
-    props: {
-      offset: {//default父组件没传值时候的默认值
-        type: Number,
-        default: 100
-      },
+    // props: {
+      // offset: {//default父组件没传值时候的默认值
+      //   type: Number,
+      //   default: 100
+      // },
       // page: {
       //   type: Object,
       //   default() {
@@ -85,7 +87,7 @@
       //     return {}
       //   }
       // }
-    },
+    // },
     // watch: {
     //   'query': {
     //     handler() {
@@ -115,20 +117,20 @@
     },
     methods: {
       gotoPage(page) {
-        console.log(this.compObj.title+new Date())
+        console.log(this.articles)
         // debugger
         blogApi.pageArticleCondition(page, this.limit ,this.compObj)
           .then(response => {
-                  // debugger
+                  debugger
                   this.data = response.data.data
                   let newArticles = response.data.data.records
                   this.articles = []
                   if (newArticles && newArticles.length > 0) {
                     // this.innerPage.pageNumber += 1
-                    // debugger
+                    debugger
                     this.articles = this.articles.concat(newArticles)
-                    for(let i=0;i<this.articles.length;i++){
-                      this.articles[i]["tags"]=this.articles[i].tag.split(",")
+                    for(let i=0;i<newArticles.length;i++){
+                      this.articles[i]["tags"]=newArticles[i].tag.split(",")
                       
                     };
           } else {
@@ -142,7 +144,7 @@
           this.loading = false
         })
       },
-      a(title,begin,end) {
+      search(title,begin,end) {
         console.log(title,begin,end)
         this.compObj.title=title
         this.compObj.begin=begin
@@ -157,8 +159,8 @@
                     // this.innerPage.pageNumber += 1
                     // debugger
                     this.articles = this.articles.concat(newArticles)
-                    for(let i=0;i<this.articles.length;i++){
-                      this.articles[i]["tags"]=this.articles[i].tag.split(",")
+                    for(let i=0;i<newArticles.length;i++){
+                      this.articles[i]["tags"]=newArticles[i].tag.split(",")
                       
                     };
           } else {
@@ -171,6 +173,26 @@
         }).finally(() => {
           this.loading = false
         })       
+      },
+      //写文章
+      write(){
+         const token = cookie.get('ATAI_BigData_token')
+            // 如果未登录，提示登录
+            if (token) {  
+            let authorId=1
+            this.$router.push({path: `/write/${authorId}`})    
+            }else{
+              debugger
+                this.$message({
+                  type: 'error',
+                  message: '请先登录?再进行下一步操作'
+                });
+                //vue路由跳转            
+                this.$router.push({
+                  path: '/login'
+                })
+            }
+           
       },
       load() {
       //   //下拉执行函数

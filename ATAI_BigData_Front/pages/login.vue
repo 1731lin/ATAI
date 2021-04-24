@@ -67,9 +67,11 @@
     methods: {
       //登录的方法
       submitLogin() {
+        debugger
         //调用登录接口 返回token字符串
         loginApi.loginMember(this.user)
           .then(response => {
+            debugger
             //获取到的token字符串放入cookie
             //1.cookie名称，2.token参数值，3.作用范围-在什么样的请求中
             cookie.set("ATAI_BigData_token",response.data.data.token,{domain:'localhost'})

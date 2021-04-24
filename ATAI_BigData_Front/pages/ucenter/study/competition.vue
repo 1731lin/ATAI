@@ -23,56 +23,40 @@
             bcompetition
             fit
             highlight-current-row>
-
+            <el-table-column  label="比赛类型"  width="150" align="center" >
+                       <el-col   slot-scope="scope"  >             
+                            <el-button type="success" v-if="scope.row.level===1" size="mini">新人赛</el-button>
+                            <el-button type="success" v-if="scope.row.level===2" size="mini">创新应用大赛</el-button>
+                            <el-button type="success" v-if="scope.row.level===3" size="mini">算法大赛</el-button>                              
+                      </el-col>
+            </el-table-column>
             <el-table-column label="比赛信息" align="center" >
               <template slot-scope="scope">
-                <div class="info" >
-                  <div class="pic">
-                    <img :src="scope.row.courseCover" alt="scope.row.courseTitle" width="100px">
-                  </div>
+                <div class="info" >                 
                   <div class="title">
-                    <a :href="'/course/'+scope.row.courseId">{{ scope.row.courseTitle }}</a>
+                    <a :href="'/competition/'+scope.row.id">{{ scope.row.name }}</a>
                   </div>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="讲师名称" width="100" align="center">
+            <el-table-column label="队伍名称" width="100" align="center">
               <template slot-scope="scope">
-                {{ scope.row.teacherName }}
+                {{ scope.row.teamName }}
               </template>
             </el-table-column>
-            <el-table-column label="价格" width="100" align="center" >
+            <el-table-column label="分数" width="100" align="center" >
               <template slot-scope="scope">
-                {{ scope.row.totalFee }}
+                {{ scope.row.score }}
               </template>
             </el-table-column>
-            <el-table-column label="创建时间" width="180" align="center">
+            <el-table-column label="截至时间" width="250" align="center">
               <template slot-scope="scope">
-                {{ scope.row.gmtCreate }}
+                {{ scope.row.deadline }}
               </template>
             </el-table-column>
-            <el-table-column prop="status" label="订单状态" width="100" align="center" >
-              <template slot-scope="scope">
-                <el-tag :type="scope.row.status === 0 ? 'warning' : 'success'">{{ scope.row.status === 0 ? '未支付' : '已支付' }}</el-tag>
-              </template>
-            </el-table-column>
+           
 
-            <el-table-column label="操作" width="150" align="center">
-              <template slot-scope="scope" >
-                <router-link v-if="scope.row.status === 0" :to="'/competition/'+scope.row.competitionNo">
-                  <el-button type="text" size="mini" icon="el-icon-edit">去支付</el-button>
-                </router-link>
-                <router-link v-if="scope.row.status === 1" :to="'/course/'+scope.row.courseId">
-                  <el-button type="text" size="mini" icon="el-icon-edit">去学习</el-button>
-                </router-link>
-                <i
-                  class="el-icon-delete"
-                  style="cursor:pointer"
-                  title="删除订单"
-                  @click="removeById(scope.row.id)"/>
-              </template>
-
-            </el-table-column>
+           
           </el-table>
         </div>
       </section>
@@ -97,32 +81,12 @@
 
     methods:{
       fetchcompetitionList(){
-        competitionApi.getcompetitionList().then(response => {
-          this.competitionList = response.data.data.items
+        competitionApi.getMyCompetitionList().then(response => {
+          debugger
+          
+          this.competitionList = response.data.data.data
         })
-      },
-
-      removeById(id) {
-            this.$confirm('确认要删除当前订单吗?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              return competitionApi.removecompetitionById(id)
-            }).then((response) => {
-              this.fetchcompetitionList()
-              this.$message({
-                type: 'success',
-                message: '删除成功✌'
-              })
-            }).catch(error => {
-              if (error === 'cancel') {
-                this.$message({
-                  message: '取消删除'
-                })
-              }
-            })
-          }
+      }
     },
   }
 </script>

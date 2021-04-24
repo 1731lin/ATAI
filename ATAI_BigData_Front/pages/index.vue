@@ -30,14 +30,14 @@
             <template slot-scope="scope">
                <!-- <a style="text-decoration:none;" href="scope.row.notice" target="_blank" class="buttonText">{{scope.row.notice}}</a>
                 -->
-                <div @click="open(scope.row.notice)">
-              {{scope.row.notice}}
+                <div @click="open(scope.row.content,scope.row.title)">
+              {{scope.row.title}}
                 </div>
              </template>
         </el-table-column>
         <el-table-column
-          prop="date1"
-          width="200%">
+          prop="gmtCreate"
+          width="300%">
           <template slot="header" slot-scope="">
                   <a href="" target="_blank">More  </a>
                 </template>
@@ -115,30 +115,17 @@
         bannerList: [], //banner数组
         courseList: [],
         teacherList: [],
-        tableData1: [{
-          notice: '《重庆日报》刊发我校马克思主义学院教师文章',
-          date1 :'2021-04-06'
-        }, {
-          notice: '《重庆日报》刊发我校马克思主义学院教师文章',
-          date1 :'2021-04-06'
-        }, {
-          notice: '《重庆日报》刊发我校马克思主义学院教师文章',
-          date1 :'2021-04-06'
-        }, {
-          notice: '《重庆日报》刊发我校马克思主义学院教师文章',
-          date1 :'2021-04-06'
-        }]
+        tableData1: []
       }
       
     },
     created() {
-
-
       this.getHotTeacher()
+      this.getLatestNotice()
     },
     methods: {
-        open(topic) {
-        this.$alert('4月1日 ，《重庆日报》刊发我校马克思主义学院院长徐茂华和马克思主义学院教师苗存龙文章《在党史学习教育中厚植人民情怀》。文章指出，人民情怀贯穿中国共产党的发展历程，是党的精神谱系中最亮丽的底色。我们要认真学习党史，厚植为民情怀，教育引导全党深刻认识党的性质宗旨，坚持一切为了人民、一切依靠人民，不断增强人民群众对党的信任和信心，筑牢党长期执政最可靠的阶级基础和群众根基。要恪守权为民用，学习党史，感悟精神，自觉把为民情怀贯穿于行使权力的全过程和各方面，实现好、维护好、发展好最广大人民根本利益。要坚守群众立场，人民立场是中国共产党的根本政治立场，认真研读党史，牢记党的性质宗旨，始终从群众立场上想问题、看事情、解难题，厚植为民情怀。要办好民生实事，民生连着民心，民心关系国运，要把党史学习教育同为群众办实事结合起来，把学习成效转化为工作动力和成效，以昂扬的姿态和坚强的毅力投身到民族复兴的伟业之中。（全文见附件）', topic, {
+        open(topic,title) {
+        this.$alert( topic, title,{
           confirmButtonText: '确定',
           customClass: 'winClass',//弹窗样式
           callback: action => {
@@ -152,6 +139,14 @@
         indexApi.getHotTeacher()
           .then(response => {
             this.teacherList = response.data.data.teacherList
+          })
+      },
+
+      //查询公告
+      getLatestNotice(){
+        indexApi.getLatestNotice()
+          .then(response => {
+            this.tableData1 = response.data.data.items
           })
       }
 

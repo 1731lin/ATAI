@@ -54,6 +54,14 @@ export default {
       url: `/atitcompetition/atai-user-competition/getRanking/${compentitionId}`,
       method: 'get',
     })
+  },
+
+  //查询当前用户的比赛列表
+  getMyCompetitionList(){
+    return request({
+      url: `/atitcompetition/atai-user-competition/getMyCompetitionList`,
+      method: 'get',
+    })
   }
 
   

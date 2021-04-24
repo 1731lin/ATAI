@@ -1,18 +1,11 @@
 import request from '@/utils/request'
 export default {
-  //广告位
-  getTopBannerAdList() {
-      return request({
-        url: '/educms/front-cms/list/1',
-        method: 'get'
-      })
-    },
 
-  //查询8热门课程
-  getHotCourse() {
+  //查询前五条公告
+  getLatestNotice(){
     return request({
-      url: `/eduservice/indexfront/indexHotCourse`,
-      method: 'get'
+      url: `/eduservice/atai-notice/getLatestNotice`,
+      method: 'get',
     })
   },
 
@@ -22,5 +15,5 @@ export default {
       url: `/eduservice/indexfront/indexHotTeacher`,
       method: 'get'
     })
-  },
+  }
 }

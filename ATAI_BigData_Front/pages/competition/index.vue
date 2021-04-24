@@ -95,7 +95,7 @@
                       <div class="mt10 hLh30 txtOf tac">{{competition.participants}} </div>
                     </el-col>
                      <el-col :span="5"  justify="start"> 
-                      <div class="mt10 hLh30 txtOf tac">{{competition.deadline.substring(0,10)}}</div>
+                      <div class="mt10 hLh30 txtOf tac">{{competition.deadline}}</div>
                     </el-col>
                     </el-row>                 
                     </a>             

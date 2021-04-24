@@ -1,34 +1,27 @@
 <template>
   <div class="app-container">
-    <div style="line-height: 40px; font-weight: 700; font-size: 22px; color: #a85a11; margin-left: 10px;">会员列表</div>
+    <div style="line-height: 40px; font-weight: 700; font-size: 22px; color: #a85a11; margin-left: 10px;">公告列表</div>
     <!--查询表单-->
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item>
-        <el-input v-model="teacherQuery.name" placeholder="会员名"/>
+        <el-input v-model="noticeQuery.title" placeholder="标题"/>
       </el-form-item>
-
-      <el-form-item>
-        <el-select v-model="teacherQuery.level" clearable placeholder="会员头衔">
-          <el-option :value="1" label="高级会员" />
-          <el-option :value="2" label="首席会员" />
-        </el-select>
-      </el-form-item>
-
+     
       <el-form-item label="添加时间">
-        <el-date-picker v-model="teacherQuery.begin" type="datetime" placeholder="选择开始时间" value-format="yyyy-MM-dd HH:mm:ss"
+        <el-date-picker v-model="noticeQuery.begin" type="datetime" placeholder="选择开始时间" value-format="yyyy-MM-dd HH:mm:ss"
           default-time="00:00:00" />
       </el-form-item>
       <el-form-item>
-        <el-date-picker v-model="teacherQuery.end" type="datetime" placeholder="选择截止时间" value-format="yyyy-MM-dd HH:mm:ss"
+        <el-date-picker v-model="noticeQuery.end" type="datetime" placeholder="选择截止时间" value-format="yyyy-MM-dd HH:mm:ss"
           default-time="00:00:00" />
       </el-form-item>
 
-      <el-button plain="true" type="primary" icon="el-icon-search" @click="getList()">查询</el-button>
-      <el-button plain="true" type="default" @click="resetData()">清空</el-button>
+      <el-button  type="primary" icon="el-icon-search" @click="getList()">查询</el-button>
+      <el-button  type="default" @click="resetData()">清空</el-button>
     </el-form>
 
     <!-- 表格 -->
-    <el-table :data="list" v-loading="listLoading" element-loading-text="数据加载中" border fit highlight-current-row>
+    <el-table :data="list" element-loading-text="数据加载中" border fit highlight-current-row>
 
       <el-table-column label="序号" width="70" align="center">
         <template slot-scope="scope">
@@ -36,27 +29,18 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="name" label="名称" width="80" />
-
-      <el-table-column label="头衔" width="80">
-        <template slot-scope="scope">
-          <!-- ===判断类型和值 -->
-          {{ scope.row.level===1?'高级会员':'首席会员' }}
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="intro" label="资历" />
+      <el-table-column prop="title" label="标题" width="80" />
+    
+      <el-table-column prop="content" label="内容" />
 
       <el-table-column prop="gmtCreate" label="添加时间" width="160" />
 
-      <el-table-column prop="sort" label="排序" width="60" />
-
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <router-link :to="'/teacher/edit/'+scope.row.id">
-            <el-button type="primary" plain="true" size="mini" icon="el-icon-edit">修改</el-button>
+          <router-link :to="'/notice/edit/'+scope.row.id">
+            <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button>
           </router-link>
-          <el-button type="danger" size="mini" plain="true" icon="el-icon-delete" @click="removeDataById(scope.row.id)">删除</el-button>
+          <el-button type="danger" size="mini"  icon="el-icon-delete" @click="removeDataById(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -67,8 +51,8 @@
   </div>
 </template>
 <script>
-  //引入调用teacher.js文件
-  import teacherApi from '@/api/edu/teacher.js'
+
+  import noticeApi from '@/api/edu/notice.js'
   export default {
     //写核心代码的位置
     data() { //定义变量和初始值
@@ -77,7 +61,7 @@
         page: 1, //当前页
         limit: 10, //每页记录数
         total: 0, //总记录数
-        teacherQuery: {} //条件封装的对象 v-model双向绑定
+        noticeQuery: {} //条件封装的对象 v-model双向绑定
       }
     },
     created() { //页面渲染之前执行，调用method定义的方法
@@ -85,9 +69,9 @@
       this.getList()
     },
     methods: { //创建具体的方法，调用teacher.js定义的方法
-      getList(page = 1) { //会员列表的方法
+      getList(page = 1) { //公告列表的方法
         this.page = page
-        teacherApi.getTeacherListPage(this.page, this.limit, this.teacherQuery)
+        noticeApi.pageNoticeCondition(this.page, this.limit, this.noticeQuery)
           .then(response => { //请求成功
             //response接口返回的数据
             //console.log(response)
@@ -100,17 +84,17 @@
       },
       resetData() { //清空按钮的方法
         //清空已输入数据
-        this.teacherQuery = {}
+        this.noticeQuery = {}
         //查询所有  恢复未进行条件查询的状态
         this.getList()
       },
-      removeDataById(id) { //删除会员按钮的方法
-        this.$confirm('此操作将永久删除会员信息, 是否继续?', '提示', {
+      removeDataById(id) { //删除公告按钮的方法
+        this.$confirm('此操作将永久删除公告信息, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          teacherApi.deleteTeacherById(id)
+          noticeApi.removeNotice(id)
             .then(response => { //删除成功
               //提示信息
               this.$message({
@@ -129,25 +113,4 @@
   }
 </script>
 
-<!-- <style>
-  .el-form-item__label {
-    color: #a85a11
-  }
 
-  .el-table {
-    color: #a85a11;
-  }
-
-  .el-table__placeholder {
-    color: orange !important;
-  }
-
-  .el-input__inner {
-    border: 1px solid #a85a11;
-    border-radius: 0px;
-    background-color: #f9d98e;
-    color: #a85a11;
-  }
-
-
-</style> -->

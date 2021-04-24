@@ -28,9 +28,6 @@
                       <a>我的比赛</a>
                     </router-link>
                     <router-link to="/ucenter/study/collect" tag="li" active-class="current" exact>
-                      <a>我的文件</a>
-                    </router-link>
-                    <router-link to="/ucenter/study/collect" tag="li" active-class="current" exact>
                       <a>我的文章</a>
                     </router-link>
                   </ol>

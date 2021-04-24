@@ -2,7 +2,7 @@
   <div class="app-container">
     <div style="font-size: 19PX; font-weight: 600; margin-bottom: 20px; margin-left: 20px;">
       <div v-if="this.$route.params && this.$route.params.id">修改成员</div>
-      <div v-else="">添加成员</div>
+      <div v-else>添加成员</div>
     </div>
 
     <el-form label-width="120px">
@@ -68,7 +68,7 @@
           level:1,
           career:'',
           intro:'',
-          avatar:'https://edu-zjm.oss-cn-beijing.aliyuncs.com/2020/04/18/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg',
+          avatar:'https://cqut-1.oss-cn-beijing.aliyuncs.com/2021/01/06/108c370e3dd34da88da0b5b2c1c6ea32121.jpg',
         }, //v-model双向绑定
         imagecropperShow: false, //上传弹框组件是否显示
         imagecropperKey: 0, //上传组件唯一标识
@@ -128,7 +128,7 @@
           level:'',
           career:'',
           intro:'',
-          avatar:'https://edu-zjm.oss-cn-beijing.aliyuncs.com/2020/04/18/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg',
+          avatar:'https://cqut-1.oss-cn-beijing.aliyuncs.com/2021/01/06/108c370e3dd34da88da0b5b2c1c6ea32121.jpg',
           }//v-model双向绑定
         }
       },

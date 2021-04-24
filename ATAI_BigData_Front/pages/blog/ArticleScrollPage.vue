@@ -66,7 +66,7 @@
         //   name: 'a.createDate',
         //   sort: 'desc'
         // },
-        articles: ["111111111"]
+        articles: []
         }     
     },
 
@@ -176,11 +176,14 @@
       },
       //写文章
       write(){
+        debugger
          const token = cookie.get('ATAI_BigData_token')
+            console.log(token)
             // 如果未登录，提示登录
             if (token) {  
-            let authorId=1
-            this.$router.push({path: `/write/${authorId}`})    
+            // let authorId=1
+            // this.$router.push({path: `/write/${authorId}`})   
+             this.$router.push({path: `/write`})    
             }else{
               debugger
                 this.$message({

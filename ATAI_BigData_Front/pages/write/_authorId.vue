@@ -189,7 +189,7 @@
             let tag =  this.articleForm.tags;
             let tags = "";
             for(let i=0;i<tag.length;i++){
-                tags=tag+tags[i]
+                tags=tags+tag[i]
                 if(i<tag.length-1)
                   tags+=","
             }

@@ -16,7 +16,9 @@ import com.atai.eduservice.service.AtaiArticleService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 import io.swagger.annotations.ApiOperation;
@@ -74,6 +76,55 @@ public class AtaiArticleController {
         return R.success().data("data",articleContentFront);
     }
 
+    //查询当前用户的文章列表
+    @ApiOperation(value = "查询当前用户的比赛列表")
+    @GetMapping("getMyArticleList/{current}/{limit}")
+    public R getMyArticleList(@PathVariable long current, @PathVariable long limit,
+                              HttpServletRequest request) {
+        JwtInfo jwtToken = null;
+        try{
+            jwtToken = JwtUtils.getMemberIdByJwtToken(request);
+        }catch (ExpiredJwtException e){
+            return R.error().code(28004).message("登录超时，重新登录");
+        }
+        if(StringUtils.isEmpty(jwtToken)) {
+            return R.error().code(28004).message("登录超时，重新登录");
+        }
+        String userId=jwtToken.getId();
+//        String userId = "1346808853676687362";
+        //创建page对象
+        Page<AtaiArticle> pageCompetition = new Page<>(current,limit);
+        //构建条件
+        QueryWrapper<AtaiArticle> wrapper = new QueryWrapper<>();
+        wrapper.eq("author_id",userId);
+        //排序
+        wrapper.orderByDesc("gmt_create");
+        ataiArticleService.page(pageCompetition,wrapper);
+        long total = pageCompetition.getTotal();//总记录数
+        List<AtaiArticle> records = pageCompetition.getRecords(); //数据list集合
+        long pages = pageCompetition.getPages();
+        long size = pageCompetition.getSize();
+        boolean hasNext = pageCompetition.hasNext();//下一页
+        boolean hasPrevious = pageCompetition.hasPrevious();//上一页
+        return R.success().data("total",total).data("records",records)
+                .data("pages",pages).data("size",size)
+                .data("hasNext",hasNext).data("hasPrevious",hasPrevious);
+    }
+
+    //2 逻辑删除公告
+    @ApiOperation(value = "逻辑删除文章")
+    @GetMapping("removeArticle/{id}")
+    public R removeArticle(@ApiParam(name = "id",value = "文章id",required = true)
+                          @PathVariable String id){
+        Boolean flag = ataiArticleService.removeById(id);
+        if(flag){
+            return R.success();
+        }else {
+            return R.error();
+        }
+    }
+
+
     //添加文章接口的方法
     @ApiOperation(value = "添加或修改文章")
     @PostMapping("addArticle")
@@ -92,7 +143,7 @@ public class AtaiArticleController {
         //把articlePublish对象的值赋给bean
         BeanUtils.copyProperties(articlePublish,ataiArticle);
         BeanUtils.copyProperties(articlePublish,ataiArticleBody);
-        if(null!= articlePublish.getId()){
+        if(null!= articlePublish.getId() && articlePublish.getId().length()>0){
             //更新
             boolean update = ataiArticleService.updateById(ataiArticle);
             ataiArticleBody.setId(articlePublish.getBodyId());

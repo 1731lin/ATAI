@@ -34,7 +34,7 @@ public class AtaiCompetitionController {
     @Autowired
     private AtaiCompetitionService ataiCompetitionService ;
 
-    //1 查询比赛表所有数据
+    //1 查询比赛表所有数据getUserCompetition
     //rest风格
     @ApiOperation(value = "所有比赛列表")
     @GetMapping("findAll")

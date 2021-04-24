@@ -49,8 +49,8 @@ public class CompetitionExcelListener extends AnalysisEventListener<CompeletionR
         int score =0;
         //获取提交的所有结果
         for(CompeletionResult a:list){
-            String tmp= (String) result.get(a.getId());
-            if(a.getResult().equals(tmp)){
+            String tmp= (String) result.get((int)Double.parseDouble(a.getId())+"");
+            if(((int)Double.parseDouble(a.getResult())+"").equals(tmp)){
                 score+=1;
             }
         }

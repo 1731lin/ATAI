@@ -2,18 +2,19 @@ package com.atai.compentition.entity;
 
 import java.math.BigDecimal;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -51,6 +52,8 @@ public class AtaiCompetition implements Serializable {
     private Long participants;
 
     @ApiModelProperty(value = "赛季截止时间")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date deadline;
 
     @ApiModelProperty(value = "奖金")
@@ -63,6 +66,7 @@ public class AtaiCompetition implements Serializable {
     private String result;
 
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
+    @TableLogic
     private Integer isDeleted;
 
     @ApiModelProperty(value = "创建时间")

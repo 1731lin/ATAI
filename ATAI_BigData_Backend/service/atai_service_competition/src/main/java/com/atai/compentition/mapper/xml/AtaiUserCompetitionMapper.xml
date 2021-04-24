@@ -29,5 +29,16 @@
     <select id="getMapperRanking" resultType="com.atai.compentition.entity.vo.RankingQuery">
         SELECT  team_name,score,deadline FROM atai_user_competition WHERE compentition_id=#{compentitionId} ORDER BY score DESC;
     </select>
+
+    <!--sql语句：根据用户id查询比赛列表信息-->
+    <select id="getMyCompetitionList" resultType="com.atai.compentition.entity.frontVo.MyCompentition">
+        SELECT auc.compentition_id AS id,auc.team_id,auc.score,auc.team_name,
+               ac.`name`,ac.`level`,ac.`participants`,ac.`deadline`,ac.`money`
+        FROM
+            `atai_user_competition` auc,atai_competition ac
+        WHERE
+            auc.`compentition_id`=ac.`id`
+        AND auc.user_id=#{userId}
+    </select>
 </mapper>
 

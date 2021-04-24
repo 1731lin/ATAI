@@ -5,6 +5,7 @@ import com.atai.commonutils.result.R;
 import com.atai.compentition.client.OssClient;
 import com.atai.compentition.entity.AtaiUserCompetition;
 import com.atai.compentition.entity.excel.CompeletionResult;
+import com.atai.compentition.entity.frontVo.MyCompentition;
 import com.atai.compentition.entity.vo.RankingQuery;
 import com.atai.compentition.entity.vo.TeamCompetition;
 import com.atai.compentition.listener.CompetitionExcelListener;
@@ -100,5 +101,11 @@ public class AtaiUserCompetitionServiceImpl extends ServiceImpl<AtaiUserCompetit
     public List<RankingQuery> getRanking(String compentitionId) {
         List<RankingQuery> rankingQuery = baseMapper.getMapperRanking(compentitionId);
         return rankingQuery;
+    }
+
+    @Override
+    public List<MyCompentition> getMyCompetitionList(String userId) {
+        List<MyCompentition> data = baseMapper.getMyCompetitionList(userId);
+        return data;
     }
 }

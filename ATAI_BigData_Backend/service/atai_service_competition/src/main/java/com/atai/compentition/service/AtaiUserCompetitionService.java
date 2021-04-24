@@ -1,6 +1,7 @@
 package com.atai.compentition.service;
 
 import com.atai.compentition.entity.AtaiUserCompetition;
+import com.atai.compentition.entity.frontVo.MyCompentition;
 import com.atai.compentition.entity.vo.RankingQuery;
 import com.atai.compentition.entity.vo.TeamCompetition;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -34,4 +35,6 @@ public interface AtaiUserCompetitionService extends IService<AtaiUserCompetition
     boolean updateByUseridCompetitionId(String userId, String compentitionId, int score, Date date);
 
     List<RankingQuery> getRanking(String compentitionId);
+
+    List<MyCompentition> getMyCompetitionList(String userId);
 }

@@ -40,6 +40,7 @@ public class OssController {
         return R.success().data("url",url);
     }
 
+
     @ApiOperation(value = "文件删除")
     @DeleteMapping("remove")
     public R removeFile(

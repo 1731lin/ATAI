@@ -9,10 +9,12 @@ import com.atai.compentition.client.UcenterClient;
 import com.atai.compentition.entity.AtaiCompetition;
 import com.atai.compentition.entity.AtaiUserCompetition;
 import com.atai.compentition.entity.excel.CompeletionResult;
+import com.atai.compentition.entity.frontVo.MyCompentition;
 import com.atai.compentition.entity.vo.RankingQuery;
 import com.atai.compentition.entity.vo.TeamCompetition;
 import com.atai.compentition.service.AtaiUserCompetitionService;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -87,9 +89,14 @@ public class AtaiUserCompetitionController {
     @PostMapping("insertUserCompetition")
     public R insertUserCompetition(@RequestBody AtaiUserCompetition ataiUserCompetition,HttpServletRequest request) {
         int id =  Integer.parseInt(ataiUserCompetitionService.getMax())+1;
-        JwtInfo jwtToken = JwtUtils.getMemberIdByJwtToken(request);
+        JwtInfo jwtToken = null;
+        try{
+            jwtToken = JwtUtils.getMemberIdByJwtToken(request);
+        }catch (ExpiredJwtException e){
+            return R.error().code(28004).message("登录超时，重新登录");
+        }
         if(StringUtils.isEmpty(jwtToken)) {
-            return R.error().code(28004).message("请登录");
+            return R.error().code(28004).message("登录超时，重新登录");
         }
         String userId=jwtToken.getId();
         String compentitionId = ataiUserCompetition.getCompentitionId();
@@ -156,6 +163,25 @@ public class AtaiUserCompetitionController {
 //             rq
 //        }
         return R.success().data("ranking",ranking1);
+    }
+
+    //查询当前用户的比赛列表
+    @ApiOperation(value = "查询当前用户的比赛列表")
+    @GetMapping("getMyCompetitionList")
+    public R getMyCompetitionList(HttpServletRequest request) {
+        JwtInfo jwtToken = null;
+        try{
+            jwtToken = JwtUtils.getMemberIdByJwtToken(request);
+        }catch (ExpiredJwtException e){
+            return R.error().code(28004).message("登录超时，重新登录");
+        }
+        if(StringUtils.isEmpty(jwtToken)) {
+            return R.error().code(28004).message("登录超时，重新登录");
+        }
+        String userId=jwtToken.getId();
+//        String userId = "1346808853676687362";
+        List<MyCompentition> data = ataiUserCompetitionService.getMyCompetitionList(userId);
+            return R.success().data("data",data);
     }
 
 }

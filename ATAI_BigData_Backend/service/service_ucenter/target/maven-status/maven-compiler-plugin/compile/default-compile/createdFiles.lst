@@ -1,0 +1,14 @@
+com\atai\eduucenter\UcenterApplication.class
+com\atai\eduucenter\service\UcenterMemberService.class
+com\atai\eduucenter\utils\ConstantWxUtils.class
+com\atai\eduucenter\mapper\UcenterMemberMapper.class
+com\atai\eduucenter\entity\UcenterMember.class
+com\atai\eduucenter\entity\vo\RegisterVo.class
+com\atai\eduucenter\utils\HttpClientUtils.class
+com\atai\eduucenter\entity\vo\ChangeVo.class
+com\atai\eduucenter\utils\HttpClientUtils$2.class
+com\atai\eduucenter\service\impl\UcenterMemberServiceImpl.class
+com\atai\eduucenter\entity\vo\LoginVo.class
+com\atai\eduucenter\utils\HttpClientUtils$1.class
+com\atai\eduucenter\controller\UcenterMemberController.class
+com\atai\eduucenter\controller\WxApiController.class

@@ -1,9 +1,6 @@
 package com.atai.eduservice.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -43,6 +40,7 @@ public class ReturnComment {
     private String content;
 
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
+    @TableLogic
     private Integer isDeleted;
 
     @ApiModelProperty(value = "逻辑删除 1（true）， 0（false）")

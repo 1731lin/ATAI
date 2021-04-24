@@ -1,6 +1,7 @@
 package com.atai.compentition.mapper;
 
 import com.atai.compentition.entity.AtaiUserCompetition;
+import com.atai.compentition.entity.frontVo.MyCompentition;
 import com.atai.compentition.entity.vo.RankingQuery;
 import com.atai.compentition.entity.vo.TeamCompetition;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -32,4 +33,6 @@ public interface AtaiUserCompetitionMapper extends BaseMapper<AtaiUserCompetitio
     TeamCompetition[] getMapperByTeamidCompetitionId(String compentitionId, String teamId);
 
     List<RankingQuery> getMapperRanking(String compentitionId);
+
+    List<MyCompentition> getMyCompetitionList(String userId);
 }

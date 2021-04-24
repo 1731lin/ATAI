@@ -1,0 +1,9 @@
+com\atai\servicebase\dto\MemberDto.class
+com\atai\servicebase\RedisConfig.class
+com\atai\servicebase\handler\MyMetaObjectHandler.class
+com\atai\servicebase\exceptionhandler\MSException.class
+com\atai\servicebase\SwaggerConfig.class
+com\atai\servicebase\exceptionhandler\GlobalExceptionHandler.class
+com\atai\servicebase\MybatisPlusConfig.class
+com\atai\servicebase\dto\CourseDto.class
+com\atai\servicebase\Main.class

@@ -1,0 +1,5 @@
+com\atai\gateway\handler\ErrorHandlerConfig.class
+com\atai\gateway\handler\JsonExceptionHandler.class
+com\atai\gateway\GatewayApplication.class
+com\atai\gateway\filter\AuthGlobalFilter.class
+com\atai\gateway\config\CorsConfig.class

@@ -70,7 +70,7 @@ public class MsmController {
         //生成随机值，传递阿里云进行发送
         code = RandomUtil.getFourBitRandom();
         Map<String,Object> param = new HashMap<>();
-        param.put("code",code);
+        param.put("checkcode",code);
 
         //调用service发送短信的方法
         boolean isSend = msmService.send(param,phoneNumber);

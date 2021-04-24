@@ -1,0 +1,6 @@
+com\atai\msmservice\MsmApplication.class
+com\atai\msmservice\utils\ConstantPropertiesUtil.class
+com\atai\msmservice\utils\RandomUtil.class
+com\atai\msmservice\controller\MsmController.class
+com\atai\msmservice\service\MsmService.class
+com\atai\msmservice\service\impl\MsmServiceImpl.class

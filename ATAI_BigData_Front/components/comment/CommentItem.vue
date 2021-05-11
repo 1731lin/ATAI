@@ -176,6 +176,14 @@
     font-size: 16px;
   }
 
+  .me-view-picture {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    vertical-align: middle;
+    background-color: #5fb878;
+  }
   .v-show-content {
     padding: 8px 25px 15px 0px !important;
   }
@@ -231,4 +239,81 @@
   .me-reply-user {
     color: #78b6f7;
   }
+
+    .me-view-title {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .me-view-author {
+    /*margin: 30px 0;*/
+    margin-top: 30px;
+    vertical-align: middle;
+  }
+
+  .me-view-picture {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    vertical-align: middle;
+    background-color: #5fb878;
+  }
+
+  .me-view-info {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 8px;
+  }
+
+  .me-view-meta {
+    font-size: 12px;
+    color: #969696;
+  }
+
+  .me-view-end {
+    margin-top: 20px;
+  }
+
+  .me-view-tag {
+    margin-top: 20px;
+    padding-left: 6px;
+    border-left: 4px solid #c5cac3;
+  }
+
+  .me-view-tag-item {
+    margin: 0 4px;
+  }
+
+  .me-view-comment {
+    margin-top: 60px;
+  }
+
+  .me-view-comment-title {
+    font-weight: 600;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 20px;
+  }
+
+  .me-view-comment-write {
+    margin-top: 20px;
+  }
+
+  .me-view-comment-text {
+    font-size: 16px;
+  }
+
+  .v-show-content {
+    padding: 8px 25px 15px 0px !important;
+  }
+
+  .v-note-wrapper .v-note-panel {
+    box-shadow: none !important;
+  }
+
+  .v-note-wrapper .v-note-panel .v-note-show .v-show-content, .v-note-wrapper .v-note-panel .v-note-show .v-show-content-html {
+    background: #fff !important;
+  }
+
 </style>

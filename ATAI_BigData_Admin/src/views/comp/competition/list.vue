@@ -11,7 +11,7 @@
         <el-select v-model="competitionQuery.level" clearable placeholder="比赛类型">
           <el-option :value="1" label="新人赛" />
           <el-option :value="2" label="创新应用大赛" />
-          <el-option :value="2" label="算法大赛" />
+          <el-option :value="3" label="算法大赛" />
         </el-select>
       </el-form-item>
 

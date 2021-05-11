@@ -2,7 +2,7 @@
   <div class="app-container">
     <div style="font-size: 19PX; font-weight: 600; margin-bottom: 20px; margin-left: 20px;">
       <div v-if="this.$route.params && this.$route.params.id">修改比赛</div>
-      <div v-else="">添加比赛</div>
+      <div v-else>添加比赛</div>
     </div>
 
     <el-form label-width="120px">
@@ -10,22 +10,26 @@
         <el-input v-model="competition.name" />
       </el-form-item>
       <el-form-item label="比赛类型">
-        <el-select v-model="competition.level" clearable placeholder="请选择">
+        <el-select v-model="competition.level" clearable placeholder="请选择" >
           <!--
-            数据类型一定要和取出的json中的一致，否则没法回填
+            数据类型一定要和取出的json中的一致，否则没法回填 classList
             value使用动态绑定的值，比赛类型由1 2 3代替
           -->
-          <el-option :value="1" label="新人赛" />
+  
+                  <!-- <a :title="item.title" href="#" @click="searchOne(item.id,index)">{{item.title}}</a> -->
+                   <el-option v-for="(item,index) in classList" :key="index" :class="{active:oneIndex==index}" :value="item.id" :label="item.title" />
+               
+          <!-- <el-option :value="1" label="新人赛" />
           <el-option :value="2" label="创新应用大赛" />
-          <el-option :value="2" label="算法大赛" />
+          <el-option :value="3" label="算法大赛" /> -->
         </el-select>
       </el-form-item>
       <el-form-item label="比赛简介">
-        <el-input v-model="competition.intro" :rows="10" type="textarea" />
+        <el-input v-model="competition.intro" :rows="5" type="textarea" />
       </el-form-item>
       <!-- 富文本 -->
       <el-form-item label="赛题描述">
-        <tinymce :height="300" v-model="competition.description" />
+        <tinymce :height="200" v-model="competition.description" />
       </el-form-item>
       <!-- 截止日期 -->
       <el-form-item label="截止日期">
@@ -95,7 +99,7 @@
   import PanThumb from '@/components/PanThumb'
   //引入Tinymce富文本编辑器
   import Tinymce from '@/components/Tinymce'
-
+  import compLevelApi from '@/api/comp/compLevel.js'
   export default {
     components: {ImageCropper,PanThumb,Tinymce}, //组件的声明
     data() {
@@ -117,7 +121,8 @@
         importBtnDisabled: false, // 按钮是否禁用,
         importBtnDisabled1: false, // 按钮是否禁用,
         loading: false,
-        loading1: false
+        loading1: false,
+        classList: null
       }
     },
     created() { //页面渲染前执行
@@ -147,6 +152,7 @@
           money:''
           }//v-model双向绑定
         }
+        this.getClassList()
       },
       //根据比赛id查到比赛信息 回显操作
       getInfo(id) {
@@ -161,7 +167,16 @@
             })
           })
       },
-
+    getClassList() { //比赛列表的方法    
+        compLevelApi.findAll()
+          .then(response => { //请求成功           
+            this.classList = response.data.items    
+            console.log(this.classList)        
+          })
+          .catch(error => { //请求失败
+            console.log(error)
+          })
+      },
       //保存按钮调用的方法
       saveOrUpdate() {
         //判断修改或添加 competition 是否有id

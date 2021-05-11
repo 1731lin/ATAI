@@ -16,9 +16,11 @@
             </dt>
             <dd class="c-s-dl-li">
               <ul class="clearfix">
-                <li>
-                  <a title="全部" href="">全部</a>
+                <li  >  
+                   <a title="全部" @click="view()">全部              
+                </a>                     
                 </li>
+                
                 <li v-for="(item,index) in subjectNestedList" :key="index" :class="{active:oneIndex==index}">
                   <a :title="item.title" href="#" @click="searchOne(item.id,index)">{{item.title}}</a>
                 </li>
@@ -62,7 +64,7 @@
             <ul class="of">
               <li v-for="competition in data.items" :key="competition.id">
                 <section class="i-comp-wrap">
-                  <a class="i-comp-pic" :href="'/competition/'+competition.id"  >
+                  <a class="i-comp-pic" @click="view(competition.id)"  >
                     <el-row :gutter="20">
                       <el-col :span="3"  justify="start" >             
                             <el-button type="success" v-if="competition.level===1" size="mini">新人赛</el-button>
@@ -81,7 +83,7 @@
                     </el-row>
                  </a>
                   <div class="mt15 i-q-txt" style="height:60px;text-align:left">
-                    <a :href="'/competition/'+competition.id" >
+                    <a @click="view(competition.id)" >
                       <el-row :gutter="20">
                     <el-col :span="12"  justify="start"> 
                     <div  :title="competition.intro" >   
@@ -151,7 +153,7 @@
       }
     },
     created() {
-      
+      debugger
       this.compObj.name=this.$route.query.index     
       this.getCompetitionList()
        //分类显示
@@ -185,8 +187,10 @@
       //分页切换的方法
       //参数是页码数
       gotoPage(page) {
+        debugger
         competitionApi.getCompetitionPageList(page, this.limit ,this.compObj)
           .then(response => {
+            debugger
             this.data = response.data.data
           })
       },
@@ -246,6 +250,17 @@
 
         //调用方法查询
         this.gotoPage(1)
+      },
+
+
+       view(id) {
+        if(id!=null)
+          this.$router.push({path: `/competition/${id}`})
+        else{
+          this.$router.push({path: `/file`})          
+        }
+          
+
       }
 
     }

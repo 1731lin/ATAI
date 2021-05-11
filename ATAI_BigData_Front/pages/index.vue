@@ -39,7 +39,7 @@
           prop="gmtCreate"
           width="300%">
           <template slot="header" slot-scope="">
-                  <a href="" target="_blank">More  </a>
+                  <a  target="_blank">More  </a>
                 </template>
         </el-table-column>
       </el-table>
@@ -60,12 +60,12 @@
                 <li v-for="teacher in teacherList" :key="teacher.id">
                   <section class="i-teach-wrap">
                     <div class="i-teach-pic">
-                      <a href="/teacher/1" :title="teacher.name">
+                      <a @click="view(teacher.id)" :title="teacher.name">
                         <img :alt="teacher.name" :src="teacher.avatar">
                       </a>
                     </div>
                     <div class="mt10 hLh30 txtOf tac">
-                      <a href="/teacher/1" :title="teacher.name" class="fsize18 c-666">{{teacher.name}}</a>
+                      <a @click="view(teacher.id)" :title="teacher.name" class="fsize18 c-666">{{teacher.name}}</a>
                     </div>
                     <div class="hLh30 txtOf tac">
                       <span class="fsize14 c-999">{{teacher.career}}</span>
@@ -80,7 +80,7 @@
               <div class="clear"></div>
             </article>
             <section class="tac">
-              <a href="/teacher/" title="全部成员" class="comm-btn c-btn-2">全部成员</a>
+              <a @click="view()" title="全部成员" class="comm-btn c-btn-2">全部成员</a>
             </section>
           </div>
         </section>
@@ -148,6 +148,13 @@
           .then(response => {
             this.tableData1 = response.data.data.items
           })
+      },
+
+      view(id) {
+        if(id!=null)
+          this.$router.push({path: `/teacher/${id}`})
+        else
+          this.$router.push({path: `/teacher`})
       }
 
 

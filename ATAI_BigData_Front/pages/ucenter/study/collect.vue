@@ -32,7 +32,7 @@
               <template slot-scope="scope">
                 <div class="info" >                 
                   <div class="title">
-                    <a :href="'/blog/'+scope.row.id">{{ scope.row.title }}</a>
+                    <a @click="view(scope.row.id)" >{{ scope.row.title }}</a>
                   </div>
                 </div>
               </template>
@@ -116,6 +116,10 @@
           this.articlesList = response.data.data.records
           this.data = response.data.data
         })
+      },
+
+       view(id) {
+        this.$router.push({path: `/blog/${id}`})
       }
     }
 

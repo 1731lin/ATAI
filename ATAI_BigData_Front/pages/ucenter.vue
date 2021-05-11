@@ -34,24 +34,6 @@
                 </li>
               </ul>
 
-             <!-- <ul>
-                <li>
-                  <span>Wo的问答</span>
-                  <ol>
-                    <li>
-                      <a href="uc_question.html" title="">
-                        Wo的提问
-                      </a>
-                    </li>
-                    <li>
-                      <a href="uc_anwser.html" title="">
-                        Wo的回答
-                      </a>
-                    </li>
-                  </ol>
-                </li>
-              </ul> -->
-
               <ul>
                 <li>
                   <span>我的消息</span>

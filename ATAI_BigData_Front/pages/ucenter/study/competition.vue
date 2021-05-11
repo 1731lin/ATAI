@@ -34,7 +34,7 @@
               <template slot-scope="scope">
                 <div class="info" >                 
                   <div class="title">
-                    <a :href="'/competition/'+scope.row.id">{{ scope.row.name }}</a>
+                    <a @click="view(scope.row.id)" >{{ scope.row.name }}</a>
                   </div>
                 </div>
               </template>
@@ -86,6 +86,9 @@
           
           this.competitionList = response.data.data.data
         })
+      },
+      view(id) {
+        this.$router.push({path: `/competition/${id}`})
       }
     },
   }

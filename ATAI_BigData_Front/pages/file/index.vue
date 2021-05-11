@@ -13,8 +13,12 @@
 
 <script>
   export default {
-
+     created() {
+       this.$router.push({path: `/competition`})
+     
+    }
   }
+      
 </script>
 
 <style>

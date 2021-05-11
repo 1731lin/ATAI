@@ -114,8 +114,7 @@
       this.competitionUserInfo.compentitionId=this.$route.params.id
     },
     mounted(){
-      debugger
-      //判断是否登录
+     
        
     },
     methods: {
